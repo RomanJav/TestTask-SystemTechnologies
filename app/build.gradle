@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.compileSdk
     defaultConfig {
         applicationId "by.tomal.exchangerates"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -23,10 +22,27 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // Kotlin
+    api rootProject.kotlinStdlibV7
+    // Network
+    api rootProject.rxjava
+    implementation rootProject.rxandroid
+    implementation rootProject.gson
+    implementation rootProject.okhttp
+    implementation rootProject.retrofit
+    implementation rootProject.retrofitGson
+    implementation rootProject.retrofitRx
+    // Tests
+    implementation rootProject.junit
+    implementation rootProject.testRunner
+    //Database
+    implementation rootProject.room
+    kapt rootProject.roomAnnotationProcessor
+    //Android
+    implementation rootProject.appcompatV7
+    implementation rootProject.constraintLayout
+    implementation rootProject.recyclerView
+    //Mvvm
+    implementation rootProject.lifecycle
+    annotationProcessor rootProject.lifecycleCompiler
 }
