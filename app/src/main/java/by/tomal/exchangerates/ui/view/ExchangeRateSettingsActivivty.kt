@@ -8,6 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import by.tomal.exchangerates.R
+import by.tomal.exchangerates.presenter.entity.ExchangeRateSettingList.FILE_NAME
 import by.tomal.exchangerates.presenter.entity.ExchangeRateViewList
 import by.tomal.exchangerates.ui.view.adapter.RateSettingsAdapter
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -26,9 +27,10 @@ class ExchangeRateSettingsActivivty : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.submit){
-            File("settings.txt").printWriter().use { out ->
+            File(applicationContext.filesDir, FILE_NAME).createNewFile()
+            File(applicationContext.filesDir, FILE_NAME).printWriter().use { out ->
                 for(rates in ExchangeRateViewList.listToday) {
-                    out.println("${rates.charCode}")
+                    out.println(rates.charCode)
                 }
             }
             onBackPressed()
