@@ -3,4 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorMenuToolbarText">#FFFFFF</color>
+    <color name="colorDateBarBackground">#919191</color>
+    <color name="colorCharCodeText">#000000</color>
+    <color name="colorScaleText">#707070</color>
+    <color name="colorRateText">#000000</color>
+    <color name="colorDateText">#000000</color>
+    <color name="colorErrorText">#FF0000</color>
 </resources>

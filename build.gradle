@@ -46,7 +46,7 @@ ext {
     gson = "com.google.code.gson:gson:2.8.5"
     def okHttpVersion = "3.14.0"
     okhttp = "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    def retrofitVersion = "2.5.0"
+    def retrofitVersion = "2.3.0"
     retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     retrofitGson = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     retrofitRx = "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
@@ -63,4 +63,5 @@ ext {
     def roomVersion = "1.1.1"
     room = "android.arch.persistence.room:runtime:$roomVersion"
     roomAnnotationProcessor = "android.arch.persistence.room:compiler:$roomVersion"
+    roomRxJava = "android.arch.persistence.room:rxjava2:$roomVersion"
 }
