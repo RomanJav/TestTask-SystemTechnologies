@@ -25,6 +25,7 @@ class ExchangeRateSettingsActivivty : AppCompatActivity() {
         return true
     }
 
+    //Сохранение настроек
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.submit){
             File(applicationContext.filesDir, FILE_NAME).createNewFile()
@@ -56,6 +57,7 @@ class ExchangeRateSettingsActivivty : AppCompatActivity() {
         exchangeRateSettingsRecyclerView.adapter = adapter
     }
 
+    //Перетаскивание элементов RecyclerView
     private fun initItemTouch() {
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,0

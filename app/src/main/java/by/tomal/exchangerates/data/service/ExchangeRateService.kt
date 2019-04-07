@@ -13,6 +13,7 @@ import retrofit2.Response
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+//Сервис получения данных с запроса
 @TargetApi(Build.VERSION_CODES.O)
 class ExchangeRateService {
 
@@ -21,6 +22,7 @@ class ExchangeRateService {
     val dateFormat = DateTimeFormatter.ofPattern("MM.dd.yyyy")
     val dateTomorrow = LocalDate.now().plusDays(1)
 
+    //Интерфейс для обратного вызова в Активити
     interface Updater {
         fun update()
         fun error()
@@ -34,15 +36,16 @@ class ExchangeRateService {
             override fun onResponse(call: Call<ExchangeRateResponse>, response: Response<ExchangeRateResponse>) {
                 if (response.isSuccessful) {
                     val rateResponse = ArrayList(response.body()!!.rateList)
-                        callback(rateResponse, date)
-                        (rateActivity as Updater).update()
+                    callback(rateResponse, date) //Обработка и сохранение данных в глобальных листах
+                    (rateActivity as Updater).update() //Вызов update в Main
                 }
             }
+
             override fun onFailure(call: Call<ExchangeRateResponse>, t: Throwable) {
-                if(dateTomorrow.format(dateFormat)==date)
+                if (dateTomorrow.format(dateFormat) == date) //Проверка, если ошибка с завтрашней датой проверить доступна ли вчерашняя
                     loadDataYesterday(context)
                 else
-                    (rateActivity as Updater).error()
+                    (rateActivity as Updater).error() //Вызов error в Main
             }
         })
     }

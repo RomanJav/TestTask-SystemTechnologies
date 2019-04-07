@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import by.tomal.exchangerates.R
@@ -20,7 +18,6 @@ import by.tomal.exchangerates.presenter.entity.ExchangeRateViewList.listToday
 import by.tomal.exchangerates.presenter.entity.ExchangeRateViewList.listTomorrow
 import by.tomal.exchangerates.ui.view.adapter.RateListAdapter
 import by.tomal.exchangerates.ui.viewController.DataLoader
-import by.tomal.exchangerates.ui.viewController.unitRatesToToday
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -38,12 +35,13 @@ class ExchangeRateMainActivity : AppCompatActivity(), ExchangeRateService.Update
         }
     }
 
+    //Создание меню Активити
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         menuItem = menu!!.findItem(R.id.settings)
         return true
     }
-
+    //При нажатии на шестеренку переход к странице настроек
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.settings)
             startActivity(createIntent(this, SETTINGS_ACTIVITY))
@@ -58,19 +56,16 @@ class ExchangeRateMainActivity : AppCompatActivity(), ExchangeRateService.Update
         initRecyclerView()
         initAdapter()
         DataLoader.loadData(this)
-        DataLoader.loadDataTomorrow(this)
     }
 
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
-
+    //Инициализация настроек отображения валют, если же файла настроек еще нет инициализирует файл по умолчанию
     private fun initSettings() {
         if (File(applicationContext.filesDir, FILE_NAME).exists()) {
             listCharCodeSettings = File(applicationContext.filesDir, FILE_NAME).readLines()
-            for (items in listCharCodeSettings)
-                Log.e("LINE_______________", items)
         } else {
             File(applicationContext.filesDir, FILE_NAME).createNewFile()
             File(applicationContext.filesDir, FILE_NAME).printWriter().use { out ->
@@ -89,7 +84,7 @@ class ExchangeRateMainActivity : AppCompatActivity(), ExchangeRateService.Update
     private fun initAdapter() {
         exchangeRateRecyclerView.adapter = adapter
     }
-
+    //Отображение даты при загрузке файлов
     private fun initDateBar() {
         if (!listToday.isNullOrEmpty())
             dateToday.text = listToday[0].dateToday
@@ -108,4 +103,16 @@ class ExchangeRateMainActivity : AppCompatActivity(), ExchangeRateService.Update
         menuItem.isVisible = false
     }
 
+    fun unitRatesToToday() {
+        if (!ExchangeRateViewList.listTomorrow.isNullOrEmpty()) {
+            for (ratesToday in ExchangeRateViewList.listToday) {
+                for (ratesTomorrow in ExchangeRateViewList.listTomorrow) {
+                    if (ratesToday.numCode == ratesTomorrow.numCode) {
+                        ratesToday.rateTomorrow = ratesTomorrow.rateTomorrow
+                        ratesToday.dateTomorrow = ratesTomorrow.dateTomorrow
+                    }
+                }
+            }
+        }
+    }
 }

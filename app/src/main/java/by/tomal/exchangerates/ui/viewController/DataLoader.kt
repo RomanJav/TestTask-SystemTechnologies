@@ -24,7 +24,8 @@ object DataLoader {
         GlobalScope.launch {
             data.get(dateToday.format(dateFormat), context)
             while (listToday.isNullOrEmpty())
-                delay(2000)
+                delay(500)
+            loadDataTomorrow(context)
         }
     }
 
@@ -32,7 +33,7 @@ object DataLoader {
         GlobalScope.launch {
             data.get(dateTomorrow.format(dateFormat), context)
             while (listTomorrow.isNullOrEmpty())
-                delay(1000)
+                delay(500)
         }
     }
 
@@ -40,7 +41,7 @@ object DataLoader {
         GlobalScope.launch {
             data.get(dateYesterday.format(dateFormat), context)
             while (listTomorrow.isNullOrEmpty())
-                delay(1000)
+                delay(500)
         }
     }
 }
